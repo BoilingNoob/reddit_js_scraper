@@ -48,14 +48,21 @@ $scrape = [pscustomobject]@{
     main_subs       = New-Object System.Collections.ArrayList
     followed_users  = New-Object System.Collections.ArrayList
     multi_subs      = New-Object System.Collections.ArrayList
-    multi_subs_objs = New-Object System.Collections.ArrayList
+    multi_subs_objs = @{}
 }
 
 $results | ForEach-Object {
     switch -regex ($_) {
-        $basic_sub_regex { $null = $scrape.main_subs.add($_) }
-        $multi_regex { $null = $scrape.multi_subs.add($_) }
-        $user_regex { $null = $scrape.followed_users.add($_) }
+        $basic_sub_regex { 
+            $null = $scrape.main_subs.add($_) 
+        }
+        $multi_regex { 
+            $null = $scrape.multi_subs.add($_) 
+            $null = $scrape.multi_subs_objs.add($_, $null) 
+        }
+        $user_regex { 
+            $null = $scrape.followed_users.add($_) 
+        }
         Default { Write-Host "no idea what this is: $($_)" }
     }
 }
