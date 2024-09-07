@@ -69,4 +69,19 @@ $results | ForEach-Object {
 
 
 
+
+Set-Clipboard ($locate_to_new_url_js -replace "#+", "$($scrape.multi_subs[0])")
+$wshell.SendKeys("^a")
+$wshell.SendKeys("^v")
+$wshell.SendKeys("^~")
+
+
+
+
+
+
+
+
+
+
 ConvertTo-Json -InputObject $scrape | Out-File ".\output_of_reddit.json"
