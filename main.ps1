@@ -1,5 +1,6 @@
 $get_multis_mains_users_js = Get-Content -Path ".\get_basic_subs.js" -Raw -Encoding utf8
 $get_multis_internals_js = Get-Content -Path ".\get_multi_internals.js" -Raw -Encoding utf8
+$locate_to_new_url_js = Get-Content -Path ".\navigate_page.js" -Raw -Encoding utf8
 
 $wshell = New-Object -ComObject wscript.shell;
 
@@ -59,10 +60,6 @@ $results | ForEach-Object {
     }
 }
 
-#$scrape.main_subs
-$scrape.multi_subs
-#$scrape.followed_users
-
-#$multis_mains_users.Replace(";", "`n")
 
 
+ConvertTo-Json -InputObject $scrape | Out-File ".\output_of_reddit.json"
