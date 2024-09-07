@@ -1,6 +1,6 @@
-$get_multis_mains_users_js = Get-Content -Path ".\get_basic_subs.js" -Raw -Encoding utf8
-$get_multis_internals_js = Get-Content -Path ".\get_multi_internals.js" -Raw -Encoding utf8
-$locate_to_new_url_js = Get-Content -Path ".\navigate_page.js" -Raw -Encoding utf8
+$get_multis_mains_users_js = Get-Content -Path ".\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8
+$get_multis_internals_js = Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8
+$locate_to_new_url_js = Get-Content -Path ".\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8
 
 $wshell = New-Object -ComObject wscript.shell;
 
