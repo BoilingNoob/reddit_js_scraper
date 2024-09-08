@@ -1,0 +1,5 @@
+clear()
+const delay = ms => new Promise(res => setTimeout(res, ms))
+await delay(500)
+document.getElementsByClassName("_1LHxa-yaHJwrPK8kuyv_Y4 _2iuoyPiKHN3kfOoeIQalDT _10BQ7pjWbeYP63SAPNS8Ts HNozj_dKjQZ59ZsfEegz8 _34mIRHpFtnJ0Sk97S2Z3D9")[0].click()
+await delay(500)
