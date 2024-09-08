@@ -1,5 +1,10 @@
-function get-all_of_mains_users_multis([wscript.shell]$wshell) {
-    Start-Sleep 3
+function get-all_of_mains_users_multis() {
+    param(
+        [wscript.shell]$wshell, 
+        $get_multis_mains_users_js = (Get-Content -Path ".\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8)
+    )
+    Set-Clipboard $get_multis_mains_users_js
+    
     $wshell.SendKeys("^a")
     Start-Sleep 1
     $wshell.SendKeys("^v")
@@ -45,7 +50,13 @@ function new-scrapeObject($my_array) {
 
     return $scrape
 }
-function set-new_url_location($new_location, $wait_x_seconds = 4) {
+function set-new_url_location() {
+    param(
+        $new_location, 
+        $wait_x_seconds = 4, 
+        $locate_to_new_url_js = (Get-Content -Path ".\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8), 
+        [wscript.shell]$wshell
+    )
     Set-Clipboard ($locate_to_new_url_js -replace "#+", $new_location)
     Start-Sleep $wait_x_seconds
     $wshell.SendKeys("^a")
@@ -53,6 +64,10 @@ function set-new_url_location($new_location, $wait_x_seconds = 4) {
     $wshell.SendKeys("^~")   
 }
 function get-internal_subs_to_multi() {
+    param(
+        $get_multis_internals_js = (Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8, 
+            [wscript.shell]$wshell)
+    )
     Set-Clipboard $get_multis_internals_js
     $wshell.SendKeys("^a")
     $wshell.SendKeys("^v")
@@ -76,7 +91,7 @@ Start-Sleep 1
 #>
 
 
-Set-Clipboard $get_multis_mains_users_js
+
 
 Write-Host "open to https://new.reddit.com/
 
@@ -88,6 +103,7 @@ click the console
 
 make sure pasting is enabled
 "
+Start-Sleep 3
 $results = get-all_of_mains_users_multis -wshell $wshell
 <#
 Start-Sleep 3
