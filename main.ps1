@@ -134,18 +134,18 @@ make sure pasting is enabled
 Start-Sleep 3
 Write-Host "working!"
 
-$results = get-all_of_mains_users_multis -get_multis_mains_users_js $get_basic_subs -wshell $wshell
+$results = get-all_of_mains_users_multis -get_multis_mains_users_js $get_basic_subs -wshell $wshell -wait_after_pasting_script $time_to_wait_after_pasting_script -loop_wait_ms $looping_feedback_time
 Write-Host "grabbed all mains and multis, $($results.count) things found"
 
 $scrape = new-scrapeObject -my_array $results
 Write-Host "scraped"
 
 foreach ($multi in $scrape.multi_subs) {
-    set-new_url_location -new_location $multi -wait_x_seconds 5 -wshell $wshell -locate_to_new_url_js $locate_to_new_url_js
+    set-new_url_location -new_location $multi -wait_x_seconds $seconds_after_loading_page -wshell $wshell -locate_to_new_url_js $locate_to_new_url_js
     Write-Host "went to new location: $($multi)|||||"
-    $scrape.multi_subs_objs.($multi) = get-internal_subs_to_multi -wshell $wshell -get_multis_internals_js $get_multis_internals_js
+    $scrape.multi_subs_objs.($multi) = get-internal_subs_to_multi -wshell $wshell -get_multis_internals_js $get_multis_internals_js -wait_after_pasting_grab_JS $time_to_wait_after_pasting_script -wait_between_check_looks_ms $looping_feedback_time
     Write-Host "scraped multi: $multi for $($scrape.multi_subs_objs.($multi).count) objects"
-    Start-Sleep -Seconds 5
+    Start-Sleep -Seconds $time_between_mutlis
 }
 
 
