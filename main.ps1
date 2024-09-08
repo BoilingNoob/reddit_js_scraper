@@ -1,3 +1,4 @@
+#region funcs
 function get-all_of_mains_users_multis() {
     param(
         $wshell, 
@@ -108,7 +109,7 @@ function get-internal_subs_to_multi() {
     $list = (Get-Clipboard).split(";") | Where-Object { $_ -notin @($null, "", " ") }
     return $list
 }
-
+#endregion funcs
 $get_basic_subs = Get-Content -Path ".\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8
 $get_multis_internals_js = Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8
 $locate_to_new_url_js = Get-Content -Path ".\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8
