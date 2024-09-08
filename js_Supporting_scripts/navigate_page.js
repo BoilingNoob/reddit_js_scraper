@@ -1,1 +1,1 @@
-window.location.href = "########";
+var expected_windopw_location = "########"
