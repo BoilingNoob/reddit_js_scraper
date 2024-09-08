@@ -69,6 +69,12 @@ function set-new_url_location() {
         $wshell
     )
 
+    if ($new_location -in @($null, "")) {
+        Write-Error -Message "navigation URL is null" -ErrorAction Stop 
+    }
+    if ($locate_to_new_url_js -in @($null, "")) {
+        Write-Error -Message "navigation URL is null" -ErrorAction Stop 
+    }
     $new_loca_script = $locate_to_new_url_js -replace "#+", $new_location
     Set-Clipboard ($new_loca_script)
     $wshell.SendKeys("^a")
