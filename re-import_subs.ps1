@@ -16,21 +16,5 @@ $locate_to_new_url_js
 
 set-new_url_location -new_location $url -wait_x_seconds $seconds_after_loading_page -wshell $wshell -locate_to_new_url_js $locate_to_new_url_js
 
-function subscribe_to_sub() {
-    param(
-        $subscribe_normal_js, 
-        $wshell,
-        $wait_after_pasting_grab_JS = 3,
-        $wait_between_check_looks_ms = 500,
-        $max_loops = 40,
-        $recursion_count = 0
-    )
-    $max_recursion = 10
-    $got_clip_board = $subscribe_normal_js
-    Set-Clipboard $got_clip_board
-    $wshell.SendKeys("^a")
-    $wshell.SendKeys("^v")
-    Start-Sleep $wait_after_pasting_grab_JS
-    $wshell.SendKeys("^~")
-}
+
 subscribe_to_sub -subscribe_normal_js $subscribe_normal_js -wshell $wshell -wait_after_pasting_grab_JS $wait_after_pasting
