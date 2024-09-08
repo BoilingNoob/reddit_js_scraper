@@ -1,7 +1,9 @@
 function get-all_of_mains_users_multis() {
     param(
         $wshell, 
-        $get_multis_mains_users_js = (Get-Content -Path ".\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8)
+        $get_multis_mains_users_js = (Get-Content -Path ".\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8),
+        $wait_after_pasting_script = 1,
+        $loop_wait_ms = 500
     )
     Set-Clipboard $get_multis_mains_users_js
     
@@ -76,7 +78,10 @@ function set-new_url_location() {
 function get-internal_subs_to_multi() {
     param(
         $get_multis_internals_js = (Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8), 
-        $wshell
+        $wshell,
+        $wait_after_pasting_grab_JS = 3,
+        $wait_between_check_looks_ms = 500
+
     )
     $got_clip_board = $get_multis_internals_js
     Set-Clipboard $get_multis_internals_js
@@ -85,7 +90,7 @@ function get-internal_subs_to_multi() {
     $wshell.SendKeys("^a")
     $wshell.SendKeys("^v")
     $wshell.SendKeys("^~")
-    Start-Sleep 3
+    Start-Sleep $wait_after_pasting_grab_JS
     $loop_count = 0
     do {
         if ($loop_count -gt 5) {
@@ -95,7 +100,7 @@ function get-internal_subs_to_multi() {
         $wshell.SendKeys("^c")
         $got_clip_board = Get-Clipboard
         $loop_count += 1
-        Start-Sleep -Milliseconds 500
+        Start-Sleep -Milliseconds $wait_between_check_looks_ms
     }while ($got_clip_board -eq $get_multis_internals_js)
     $wshell.SendKeys("{ENTER}")
     $list = (Get-Clipboard).split(";")
