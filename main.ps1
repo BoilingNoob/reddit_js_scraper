@@ -22,7 +22,7 @@ function get-all_of_mains_users_multis() {
         $wshell.SendKeys("^c")
         $loop_count += 1
         Start-Sleep -Milliseconds $loop_wait_ms
-    }while ($got_clip_board -like ("*" + $get_multis_mains_users_js))
+    }while ($got_clip_board -notmatch "(https:\/\/)")
     
     $wshell.SendKeys("{Enter}")
 
@@ -102,7 +102,7 @@ function get-internal_subs_to_multi() {
         $got_clip_board = Get-Clipboard
         $loop_count += 1
         Start-Sleep -Milliseconds $wait_between_check_looks_ms
-    }while ($got_clip_board -eq $get_multis_internals_js)
+    }while ($got_clip_board -notmatch "(https:\/\/)")
     $wshell.SendKeys("{ENTER}")
     $list = (Get-Clipboard).split(";") | Where-Object { $_ -notin @($null, "", " ") }
     return $list
