@@ -136,8 +136,6 @@ $max_loops_for_checking = 20
 
 $sleep_before_running_entire_script = 3
 
-
-
 $wshell = New-Object -ComObject wscript.shell;
 
 Write-Host "open to https://new.reddit.com/
