@@ -16,7 +16,7 @@ function get-all_of_mains_users_multis() {
     $loop_count = 0
     do {
         if ($loop_count -gt 5) {
-            write-host "Looping, loop count: $($loop_count)"
+            write-host "Looping, loop count: $($loop_count) , $got_clip_board"
         }
         $wshell.SendKeys("^a")
         $wshell.SendKeys("^c")
@@ -96,7 +96,7 @@ function get-internal_subs_to_multi() {
     $loop_count = 0
     do {
         if ($loop_count -gt 5) {
-            Write-Host "Loop: $loop_count  "
+            Write-Host "Loop: $loop_count  , $got_clip_board"
         }
         $wshell.SendKeys("^a")
         $wshell.SendKeys("^c")
