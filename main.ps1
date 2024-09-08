@@ -104,7 +104,7 @@ function get-internal_subs_to_multi() {
         Start-Sleep -Milliseconds $wait_between_check_looks_ms
     }while ($got_clip_board -eq $get_multis_internals_js)
     $wshell.SendKeys("{ENTER}")
-    $list = (Get-Clipboard).split(";")
+    $list = (Get-Clipboard).split(";") | Where-Object { $_ -notin @($null, "", " ") }
     return $list
 }
 
