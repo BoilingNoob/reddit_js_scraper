@@ -5,7 +5,8 @@ function get-all_of_mains_users_multis() {
         $wait_after_pasting_script = 1,
         $loop_wait_ms = 500
     )
-    Set-Clipboard $get_multis_mains_users_js
+    $got_clip_board = $get_multis_mains_users_js
+    Set-Clipboard $got_clip_board
     
     $wshell.SendKeys("^a")
     $wshell.SendKeys(" ")
@@ -13,9 +14,14 @@ function get-all_of_mains_users_multis() {
     $wshell.SendKeys("^v")
     Start-Sleep 1
     $wshell.SendKeys("^~")
-    Start-Sleep 1
-    $wshell.SendKeys("^a")
-    $wshell.SendKeys("^c")
+    #Start-Sleep $wait_after_pasting_script
+    $loop_count = 0
+    do {
+        if ($loop_count -gt 5) {
+            write-host "Looping, loop count: $($loop_count)"
+        }
+        $wshell.SendKeys("^a")
+        $wshell.SendKeys("^c")
     Start-Sleep 1
     $wshell.SendKeys("{Enter}")
 
