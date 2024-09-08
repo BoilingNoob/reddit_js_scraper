@@ -69,12 +69,6 @@ function set-new_url_location() {
     )
 
     $new_loca_script = $locate_to_new_url_js -replace "#+", $new_location
-
-    Write-Host "attempt at navigation:
-    
-    $($new_loca_script)
-    ||||||||||||||||||||"
-
     Set-Clipboard ($new_loca_script)
     $wshell.SendKeys("^a")
     $wshell.SendKeys(" ")
