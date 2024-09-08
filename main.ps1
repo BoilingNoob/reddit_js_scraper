@@ -54,7 +54,7 @@ function new-scrapeObject($my_array) {
             $user_regex { 
                 $null = $scrape.followed_users.add($_) 
             }
-            Default { Write-Host "no idea what this is: $($_)" }
+            Default { Write-Host "no idea what this is:$($_)<<end of print" }
         }
     }
 
