@@ -116,10 +116,9 @@ $time_to_wait_after_pasting_script = 0.5 #seconds
 $time_between_mutlis = 2
 $seconds_after_loading_page = 3
 
+
+
 $wshell = New-Object -ComObject wscript.shell;
-
-
-
 
 Write-Host "open to https://new.reddit.com/
 
@@ -151,4 +150,4 @@ foreach ($multi in $scrape.multi_subs) {
 
 
 ConvertTo-Json -InputObject $scrape | Out-File ".\output_of_reddit.json"
-Write-Host "outputted"
+Write-Host "outputted" -ForegroundColor Green
