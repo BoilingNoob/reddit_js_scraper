@@ -6,11 +6,11 @@ $locate_to_new_url_js = Get-Content -Path ".\js_Supporting_scripts\navigate_page
 $output_path = ".\output_of_reddit.json"
 $looping_feedback_time = 300 #ms
 $time_to_wait_after_pasting_script = 1 #seconds
-$time_between_mutlis = 3
-$seconds_after_loading_page = 3
+$time_between_mutlis = 3 #seconds
+$seconds_after_loading_page = 3 #seconds
 $max_loops_for_checking = 20
 
-$sleep_before_running_entire_script = 3
+$sleep_before_running_entire_script = 3 #seconds
 
 $wshell = New-Object -ComObject wscript.shell;
 
