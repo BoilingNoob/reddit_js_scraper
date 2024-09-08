@@ -8,12 +8,6 @@ $wait_after_pasting = 1
 Start-Sleep $sleep_before_running_entire_script
 Write-Host "working!"
 
-<#
-Write-Host "url: $url
-$locate_to_new_url_js
-<<" -ForegroundColor Green
-#>
-
 set-new_url_location -new_location $url -wait_x_seconds $seconds_after_loading_page -wshell $wshell -locate_to_new_url_js $locate_to_new_url_js
 
 
