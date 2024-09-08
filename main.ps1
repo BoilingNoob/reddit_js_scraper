@@ -111,6 +111,10 @@ function get-internal_subs_to_multi() {
 $get_basic_subs = Get-Content -Path ".\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8
 $get_multis_internals_js = Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8
 $locate_to_new_url_js = Get-Content -Path ".\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8
+$looping_feedback_time = 300 #ms
+$time_to_wait_after_pasting_script = 0.5 #seconds
+$time_between_mutlis = 2
+$seconds_after_loading_page = 3
 
 $wshell = New-Object -ComObject wscript.shell;
 
