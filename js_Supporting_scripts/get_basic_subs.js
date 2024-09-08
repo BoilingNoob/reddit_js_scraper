@@ -1,5 +1,4 @@
 clear()
-
 var list_elems = document.getElementsByClassName("XEkFoehJNxIH9Wlr5Ilzd _2MgAHlPDdKvXiG-Qbz5cbC ")
 
 var regex_exp_multis = new RegExp("\/m\/", "g");

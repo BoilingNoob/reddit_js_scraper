@@ -1,5 +1,4 @@
 clear()
-
 document.getElementsByClassName("_31vaGAnztsBt2uSP6kVo6D _2iuoyPiKHN3kfOoeIQalDT _3zbhtNO0bdck0oYbYRhjMC HNozj_dKjQZ59ZsfEegz8 ")[0].click()
 var multi_elems = document.getElementsByClassName("_3NFddqqrzfM8noBES52Qcy _14n0HZvxiP1OqS51zI7Sy3")
 
