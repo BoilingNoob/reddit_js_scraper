@@ -83,9 +83,12 @@ function get-internal_subs_to_multi() {
         $get_multis_internals_js = (Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8), 
         $wshell,
         $wait_after_pasting_grab_JS = 3,
-        $wait_between_check_looks_ms = 500
-
+        $wait_between_check_looks_ms = 500,
+        $max_loops = 40,
+        $recursion_count = 0
     )
+
+    $max_recursion = 10
     $got_clip_board = $get_multis_internals_js
     Set-Clipboard $get_multis_internals_js
 
@@ -104,9 +107,20 @@ function get-internal_subs_to_multi() {
         $got_clip_board = Get-Clipboard
         $loop_count += 1
         Start-Sleep -Milliseconds $wait_between_check_looks_ms
-    }while ($got_clip_board -notmatch "(https:\/\/|r/|u/|user/)")
+    }while ($got_clip_board -notmatch "(https:\/\/|r/|u/|user/)" -and $max_loops -gt $loop_count)
     $wshell.SendKeys("{ENTER}")
-    $list = (Get-Clipboard).split(";") | Where-Object { $_ -notin @($null, "", " ") }
+    
+    if ($loop_count -gt $max_loops) {
+        if ($recursion_count -lt $max_recursion) {
+            get-internal_subs_to_multi -get_multis_internals_js $get_multis_internals_js -wshell $wshell -wait_after_pasting_grab_JS $wait_after_pasting_grab_JS -wait_between_check_looks_ms $wait_between_check_looks_ms -max_loops $max_loops -recursion_count ($recursion_count + 1)
+        }
+        else {
+            Write-Error -Message "could not recursivly do it" -ErrorAction Stop
+        }
+    }
+    else {
+        $list = (Get-Clipboard).split(";") | Where-Object { $_ -notin @($null, "", " ") }
+    }
     return $list
 }
 #endregion funcs
@@ -115,9 +129,10 @@ $get_multis_internals_js = Get-Content -Path ".\js_Supporting_scripts\get_multi_
 $locate_to_new_url_js = Get-Content -Path ".\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8
 $output_path = ".\output_of_reddit.json"
 $looping_feedback_time = 300 #ms
-$time_to_wait_after_pasting_script = 0.5 #seconds
-$time_between_mutlis = 2
+$time_to_wait_after_pasting_script = 1 #seconds
+$time_between_mutlis = 3
 $seconds_after_loading_page = 3
+$max_loops_for_checking = 20
 
 $sleep_before_running_entire_script = 3
 
@@ -147,7 +162,7 @@ $scrape = new-scrapeObject -my_array $results
 foreach ($multi in $scrape.multi_subs) {
     set-new_url_location -new_location $multi -wait_x_seconds $seconds_after_loading_page -wshell $wshell -locate_to_new_url_js $locate_to_new_url_js
     Write-Host "went to new location: $($multi)|||||"
-    $scrape.multi_subs_objs.($multi) = get-internal_subs_to_multi -wshell $wshell -get_multis_internals_js $get_multis_internals_js -wait_after_pasting_grab_JS $time_to_wait_after_pasting_script -wait_between_check_looks_ms $looping_feedback_time
+    $scrape.multi_subs_objs.($multi) = get-internal_subs_to_multi -wshell $wshell -get_multis_internals_js $get_multis_internals_js -wait_after_pasting_grab_JS $time_to_wait_after_pasting_script -wait_between_check_looks_ms $looping_feedback_time -max_loops $max_loops_for_checking
     Write-Host "scraped multi: $multi for $($scrape.multi_subs_objs.($multi).count) objects"
     Start-Sleep -Seconds $time_between_mutlis
 }
