@@ -1,8 +1,5 @@
 Import-Module .\func_lib.psm1
 
-$get_basic_subs = Get-Content -Path ".\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8
-$get_multis_internals_js = Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8
-$locate_to_new_url_js = Get-Content -Path ".\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8
 $output_path = ".\output_of_reddit.json"
 $looping_feedback_time = 300 #ms
 $time_to_wait_after_pasting_script = 1 #seconds
