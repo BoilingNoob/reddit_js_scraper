@@ -45,6 +45,13 @@ function new-scrapeObject($my_array) {
 
     return $scrape
 }
+function set-new_url_location() {
+    Set-Clipboard ($locate_to_new_url_js -replace "#+", "$($scrape.multi_subs[0])")
+    Start-Sleep 4
+    $wshell.SendKeys("^a")
+    $wshell.SendKeys("^v")
+    $wshell.SendKeys("^~")   
+}
 $get_multis_mains_users_js = Get-Content -Path ".\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8
 $get_multis_internals_js = Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8
 $locate_to_new_url_js = Get-Content -Path ".\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8
@@ -87,12 +94,8 @@ $wshell.SendKeys("{Enter}")
 #>
 $scrape = new-scrapeObject -my_array $results
 
+set-new_url_location
 
-Set-Clipboard ($locate_to_new_url_js -replace "#+", "$($scrape.multi_subs[0])")
-Start-Sleep 4
-$wshell.SendKeys("^a")
-$wshell.SendKeys("^v")
-$wshell.SendKeys("^~")
 
 Set-Clipboard $get_multis_internals_js
 $wshell.SendKeys("^a")
