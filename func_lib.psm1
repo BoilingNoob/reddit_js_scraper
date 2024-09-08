@@ -1,7 +1,7 @@
 function get-all_of_mains_users_multis() {
     param(
         $wshell, 
-        $get_multis_mains_users_js = (Get-Content -Path ".\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8),
+        $get_multis_mains_users_js = (Get-Content -Path "$PSScriptRoot\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8),
         $wait_after_pasting_script = 1,
         $loop_wait_ms = 500
     )
@@ -65,7 +65,7 @@ function set-new_url_location() {
     param(
         $new_location, 
         $wait_x_seconds = 4, 
-        $locate_to_new_url_js = (Get-Content -Path ".\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8), 
+        $locate_to_new_url_js = (Get-Content -Path "$PSScriptRoot\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8), 
         $wshell
     )
 
@@ -79,7 +79,7 @@ function set-new_url_location() {
 }
 function get-internal_subs_to_multi() {
     param(
-        $get_multis_internals_js = (Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8), 
+        $get_multis_internals_js = (Get-Content -Path "$PSScriptRoot\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8), 
         $wshell,
         $wait_after_pasting_grab_JS = 3,
         $wait_between_check_looks_ms = 500,
@@ -123,15 +123,23 @@ function get-internal_subs_to_multi() {
     return $list
 }
 
-$get_basic_subs = Get-Content -Path ".\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8
-$get_multis_internals_js = Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8
-$locate_to_new_url_js = Get-Content -Path ".\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8
+$get_basic_subs = Get-Content -Path "$PSScriptRoot\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8
+$get_multis_internals_js = Get-Content -Path "$PSScriptRoot\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8
+$locate_to_new_url_js = Get-Content -Path "$PSScriptRoot\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8
+$subscribe_normal_js = Get-Content -Path "$PSScriptRoot\js_Supporting_scripts\subscribe_regular.js" -Raw -Encoding utf8
+
+
+$wshell = New-Object -ComObject wscript.shell
 
 Export-ModuleMember -Function get-all_of_mains_users_multis
 Export-ModuleMember -Function new-scrapeObject
 Export-ModuleMember -Function set-new_url_location
 Export-ModuleMember -Function get-internal_subs_to_multi
 
-Export-ModuleMember -Variable $get_basic_subs
-Export-ModuleMember -Variable $get_multis_internals_js
-Export-ModuleMember -Variable $locate_to_new_url_js
+Export-ModuleMember -Variable get_basic_subs
+Export-ModuleMember -Variable get_multis_internals_js
+Export-ModuleMember -Variable locate_to_new_url_js
+Export-ModuleMember -Variable subscribe_normal_js
+
+
+Export-ModuleMember -Variable wshell
