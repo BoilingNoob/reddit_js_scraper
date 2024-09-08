@@ -143,7 +143,6 @@ $results = get-all_of_mains_users_multis -get_multis_mains_users_js $get_basic_s
 Write-Host "grabbed all mains and multis, $($results.count) things found"
 
 $scrape = new-scrapeObject -my_array $results
-Write-Host "scraped"
 
 foreach ($multi in $scrape.multi_subs) {
     set-new_url_location -new_location $multi -wait_x_seconds $seconds_after_loading_page -wshell $wshell -locate_to_new_url_js $locate_to_new_url_js
