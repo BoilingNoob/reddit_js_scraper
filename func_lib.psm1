@@ -126,11 +126,29 @@ function get-internal_subs_to_multi() {
     }
     return $list
 }
+function subscribe_to_sub() {
+    param(
+        $subscribe_normal_js, 
+        $wshell,
+        $wait_after_pasting_grab_JS = 3,
+        $wait_between_check_looks_ms = 500,
+        $max_loops = 40,
+        $recursion_count = 0
+    )
+    $max_recursion = 10
+    $got_clip_board = $subscribe_normal_js
+    Set-Clipboard $got_clip_board
+    $wshell.SendKeys("^a")
+    $wshell.SendKeys("^v")
+    Start-Sleep $wait_after_pasting_grab_JS
+    $wshell.SendKeys("^~")
+}
 
 $get_basic_subs = Get-Content -Path "$PSScriptRoot\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8
 $get_multis_internals_js = Get-Content -Path "$PSScriptRoot\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8
 $locate_to_new_url_js = Get-Content -Path "$PSScriptRoot\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8
 $subscribe_normal_js = Get-Content -Path "$PSScriptRoot\js_Supporting_scripts\subscribe_regular.js" -Raw -Encoding utf8
+$output_path = "$PSScriptRoot\output_of_reddit.json"
 
 
 $wshell = New-Object -ComObject wscript.shell
@@ -139,11 +157,13 @@ Export-ModuleMember -Function get-all_of_mains_users_multis
 Export-ModuleMember -Function new-scrapeObject
 Export-ModuleMember -Function set-new_url_location
 Export-ModuleMember -Function get-internal_subs_to_multi
+Export-ModuleMember -Function subscribe_to_sub
 
 Export-ModuleMember -Variable get_basic_subs
 Export-ModuleMember -Variable get_multis_internals_js
 Export-ModuleMember -Variable locate_to_new_url_js
 Export-ModuleMember -Variable subscribe_normal_js
+Export-ModuleMember -Variable output_path
 
 
 Export-ModuleMember -Variable wshell
