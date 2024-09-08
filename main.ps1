@@ -75,8 +75,8 @@ function set-new_url_location() {
 }
 function get-internal_subs_to_multi() {
     param(
-        $get_multis_internals_js = (Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8, 
-            $wshell)
+        $get_multis_internals_js = (Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8), 
+        $wshell
     )
     $got_clip_board = $get_multis_internals_js
     Set-Clipboard $get_multis_internals_js
@@ -94,7 +94,6 @@ function get-internal_subs_to_multi() {
         $wshell.SendKeys("^a")
         $wshell.SendKeys("^c")
         $got_clip_board = Get-Clipboard
-        Write-Host $got_clip_board
         $loop_count += 1
         Start-Sleep -Milliseconds 500
     }while ($got_clip_board -eq $get_multis_internals_js)
