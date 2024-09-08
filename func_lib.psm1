@@ -123,7 +123,15 @@ function get-internal_subs_to_multi() {
     return $list
 }
 
+$get_basic_subs = Get-Content -Path ".\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8
+$get_multis_internals_js = Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8
+$locate_to_new_url_js = Get-Content -Path ".\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8
+
 Export-ModuleMember -Function get-all_of_mains_users_multis
 Export-ModuleMember -Function new-scrapeObject
 Export-ModuleMember -Function set-new_url_location
 Export-ModuleMember -Function get-internal_subs_to_multi
+
+Export-ModuleMember -Variable $get_basic_subs
+Export-ModuleMember -Variable $get_multis_internals_js
+Export-ModuleMember -Variable $locate_to_new_url_js
