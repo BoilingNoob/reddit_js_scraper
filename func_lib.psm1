@@ -95,9 +95,7 @@ function get-internal_subs_to_multi() {
 
     $max_recursion = 10
     $got_clip_board = $get_multis_internals_js
-    Set-Clipboard $get_multis_internals_js
-
-    $got_clip_board = $null
+    Set-Clipboard $got_clip_board
     $wshell.SendKeys("^a")
     $wshell.SendKeys("^v")
     $wshell.SendKeys("^~")
