@@ -1,5 +1,10 @@
 clear()
+const delay = ms => new Promise(res => setTimeout(res, ms))
+await delay(500)
 document.getElementsByClassName("_31vaGAnztsBt2uSP6kVo6D _2iuoyPiKHN3kfOoeIQalDT _3zbhtNO0bdck0oYbYRhjMC HNozj_dKjQZ59ZsfEegz8 ")[0].click()
+await delay(500)
+
+
 var multi_elems = document.getElementsByClassName("_3NFddqqrzfM8noBES52Qcy _14n0HZvxiP1OqS51zI7Sy3")
 
 var multi_elems_string =""
