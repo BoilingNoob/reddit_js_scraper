@@ -78,14 +78,29 @@ function get-internal_subs_to_multi() {
         $get_multis_internals_js = (Get-Content -Path ".\js_Supporting_scripts\get_multi_internals.js" -Raw -Encoding utf8, 
             $wshell)
     )
+    $got_clip_board = $get_multis_internals_js
     Set-Clipboard $get_multis_internals_js
+
+    $got_clip_board = $null
     $wshell.SendKeys("^a")
     $wshell.SendKeys("^v")
     $wshell.SendKeys("^~")
-    Start-Sleep 1
-    $wshell.SendKeys("^a")
-    $wshell.SendKeys("^c")
-    return Get-Clipboard
+    Start-Sleep 3
+    $loop_count = 0
+    do {
+        if ($loop_count -gt 5) {
+            Write-Host "Loop: $loop_count  "
+        }
+        $wshell.SendKeys("^a")
+        $wshell.SendKeys("^c")
+        $got_clip_board = Get-Clipboard
+        Write-Host $got_clip_board
+        $loop_count += 1
+        Start-Sleep -Milliseconds 500
+    }while ($got_clip_board -eq $get_multis_internals_js)
+    $wshell.SendKeys("{ENTER}")
+    $list = (Get-Clipboard).split(";")
+    return $list
 }
 
 $get_basic_subs = Get-Content -Path ".\js_Supporting_scripts\get_basic_subs.js" -Raw -Encoding utf8
@@ -93,6 +108,8 @@ $get_multis_internals_js = Get-Content -Path ".\js_Supporting_scripts\get_multi_
 $locate_to_new_url_js = Get-Content -Path ".\js_Supporting_scripts\navigate_page.js" -Raw -Encoding utf8
 
 $wshell = New-Object -ComObject wscript.shell;
+
+
 
 
 Write-Host "open to https://new.reddit.com/
@@ -115,12 +132,14 @@ Write-Host "grabbed all mains and multis, $($results.count) things found"
 $scrape = new-scrapeObject -my_array $results
 Write-Host "scraped"
 
-$new_location = $scrape.multi_subs[0]
-set-new_url_location -new_location $new_location -wait_x_seconds 4 -wshell $wshell -locate_to_new_url_js $locate_to_new_url_js
-Write-Host "went to new location: $($new_location)|||||"
+foreach ($multi in $scrape.multi_subs) {
+    set-new_url_location -new_location $multi -wait_x_seconds 5 -wshell $wshell -locate_to_new_url_js $locate_to_new_url_js
+    Write-Host "went to new location: $($multi)|||||"
+    $scrape.multi_subs_objs.($multi) = get-internal_subs_to_multi -wshell $wshell -get_multis_internals_js $get_multis_internals_js
+    Write-Host "scraped multi: $multi for $($scrape.multi_subs_objs.($multi).count) objects"
+    Start-Sleep -Seconds 5
+}
 
-get-internal_subs_to_multi -wshell $wshell -get_multis_internals_js $get_multis_internals_js
-Write-Host "scraped multi"
 
 ConvertTo-Json -InputObject $scrape | Out-File ".\output_of_reddit.json"
 Write-Host "outputted"
